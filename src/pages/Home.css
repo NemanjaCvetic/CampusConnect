@@ -1,0 +1,122 @@
+.home {
+  min-height: 100vh;
+  background-color: white;
+}
+
+.hero-section {
+  display: flex;
+  justify-content: flex-end;
+  padding: 80px 80px 40px 80px;
+}
+
+.hero-content {
+  max-width: 650px;
+  text-align: left;
+}
+
+.hero-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.hero-content h1 {
+  font-size: 64px;
+  line-height: 1.05;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.hero-text {
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--text-light);
+  max-width: 560px;
+}
+
+.cards-section {
+  padding: 20px 80px 80px 80px;
+}
+
+.cards-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.cards-header h2 {
+  font-size: 28px;
+  color: var(--primary);
+}
+
+.arrow-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.arrow-buttons button {
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: white;
+  color: var(--primary);
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.arrow-buttons button:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.arrow-buttons button:not(:disabled):hover {
+  background-color: var(--primary);
+  color: white;
+}
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.item-card {
+  height: 230px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  display: flex;
+  flex-direction: column; /* IMPORTANT */
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  
+  
+
+  transition: 0.2s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-8px);
+}
+
+/* image styling */
+.item-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* text */
+.item-card p {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--primary);
+}
