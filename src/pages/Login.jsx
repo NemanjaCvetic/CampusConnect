@@ -13,7 +13,7 @@ function Login({ setLogged }) {
 
     
     return (
-  <div className="auth-page">
+  <div className="auth-page1">
     <div className="auth-card">
       <h1>Login</h1>
 

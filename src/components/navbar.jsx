@@ -16,7 +16,6 @@ function Navbar() {
         <Link to="/">Home</Link>
         <a href="#">Lost & Found</a>
         <Link to="/about">About</Link>
-        <a href="#">Contact</a>
       </div>
 
       <div className="navbar-right">
