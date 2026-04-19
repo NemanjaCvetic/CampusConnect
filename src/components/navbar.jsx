@@ -1,6 +1,10 @@
 import "./navbar.css";
+import {useNavigate} from "react-router-dom"
 import logoImg from "../assets/www.famnit.upr.png";
+import { Link } from "react-router-dom";
 function Navbar() {
+
+  const navigate = useNavigate();
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -9,15 +13,15 @@ function Navbar() {
       </div>
 
       <div className="navbar-center">
-        <a href="#">Home</a>
+        <Link to="/">Home</Link>
         <a href="#">Lost & Found</a>
         <a href="#">About</a>
         <a href="#">Contact</a>
       </div>
 
       <div className="navbar-right">
-        <button className="login-btn">Login</button>
-        <button className="signup-btn">Sign Up</button>
+        <button onClick={() => navigate("/login")} className="login-btn">Login</button>
+        <button onClick={() => navigate("/signup")} className="signup-btn">Sign Up</button>
       </div>
     </nav>
   );
