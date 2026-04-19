@@ -1,0 +1,141 @@
+.about-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #171936;
+}
+
+.about-main {
+  min-height: 45vh;
+  background: linear-gradient(rgba(20, 30, 55, 0.65), rgba(20, 30, 55, 0.65)),
+  url("https://www.famnit.upr.si/en/resources/images/news/20210927112756.jpg:resizebox?1264x712");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 140px 20px 80px;
+  text-align: center;
+}
+
+.about-overlay {
+  max-width: 800px;
+  color: white;
+}
+
+.about-overlay h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.about-overlay p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.about-content {
+  width: 70%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.about-section {
+  background: rgba(255, 255, 255, 0.92);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(28, 36, 73, 0.08);
+}
+
+.about-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+}
+
+.about-section p {
+  line-height: 1.8;
+  color: #444;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.feature-card {
+  background: #f8f9fc;
+  border-radius: 16px;
+  padding: 1.2rem;
+  border: 1px solid #e7ebf3;
+}
+
+.feature-card h3 {
+  margin-bottom: 0.7rem;
+  font-size: 1.05rem;
+  color: #1f3152;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-overlay h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-overlay h1 {
+    font-size: 2rem;
+  }
+
+  .about-overlay p {
+    font-size: 1rem;
+  }
+
+  .about-section {
+    padding: 1.5rem;
+  }
+}
+
+.contact-card {
+  text-align: center;
+}
+
+.contact-info {
+  margin-top: 1rem;
+  color: #555;
+}
+
+.contact-actions {
+  margin-top: 1.5rem;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  background: #1f3152;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.contact-btn:hover {
+  background: #5a6681;
+}
