@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import "./src/config/db.js"; // runs the connection test on startup
+import authRoutes from "./src/routes/authRoutes.js";
+
 
 dotenv.config();
 
@@ -33,7 +35,9 @@ app.get("/api/health", (req, res) => {
     res.json({ status: "ok", message: "CampusConnect API is running" });
 });
 
+app.use("/api/auth", authRoutes);
+
 // ── Start server ──────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
