@@ -4,6 +4,18 @@ import Navbar from "./components/navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import About from "./pages/About";
+import LostFound from "./pages/LostFound";
+import RequestPage from "./pages/RequestPage";
+import Profile from "./pages/Profile";
+import Footbar from "./components/footbar";
+import ReportLost from "./pages/ReportLost";
+import ReportFound from "./pages/ReportFound";
+import AdminDashboard from "./pages/AdminDashboard";
+import Users from "./pages/Users";
+import Items from "./pages/Items";
+import Claims from "./pages/Claims";
+import "leaflet/dist/leaflet.css";
+
 import {useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -18,8 +30,20 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path ="/login" element={<Login setLogged = {setLogged}/>}/>
         <Route path ="/signup" element={<Signup setLogged = {setLogged}/>}/>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/request/:id" element={<RequestPage />} />
+        <Route path="/lostfound" element={<LostFound />} />
+        <Route path="/report-lost" element={<ReportLost/>}/>
+        <Route path="/report-found" element={<ReportFound/>}/>
+        <Route path ="/admin" element ={<AdminDashboard/>}></Route>
+        <Route path ="/users"element = {<Users/>}></Route>
+        <Route path ="/items" element = {<Items/>}></Route>
+        <Route path="/admin/claims" element={<Claims />} />
       </Routes>
+      <Footbar />
     </Router>
+
+  
   );
 }
 

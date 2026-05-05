@@ -14,8 +14,10 @@ function Navbar() {
 
       <div className="navbar-center">
         <Link to="/">Home</Link>
-        <a href="#">Lost & Found</a>
+        <Link to="/lostfound">Lost & Found</Link>
         <Link to="/about">About</Link>
+        <Link to="/profile">Profile</Link>
+        <Link to="/admin">Admin Dashboard</Link>
       </div>
 
       <div className="navbar-right">
