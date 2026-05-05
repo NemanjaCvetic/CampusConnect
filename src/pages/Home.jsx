@@ -7,6 +7,10 @@ import foodImg from "../assets/drinks.png"
 import bookImg from "../assets/books.png"
 import valuablesImg from "../assets/valuables.png"
 import otherImg from "../assets/other.png"
+import { Link } from "react-router-dom";
+
+import MapView from "./MapView";
+import ItemsMap from "./ItemsMap";
 
 function Home() {
     const items = [
@@ -17,6 +21,25 @@ function Home() {
         { name: "Valuables", img: valuablesImg },
         { name: "Other", img: otherImg }
     ];
+
+    const items2 = [
+  {
+    id: 1,
+    title: "Black Wallet",
+    location: "Library",
+    status: "Lost",
+    lat: 45.5481,
+    lng: 13.7300,
+  },
+  {
+    id: 2,
+    title: "White AirPods Case",
+    location: "Cafeteria",
+    status: "Found",
+    lat: 45.5475,
+    lng: 13.7294,
+  },
+];
     const [startIndex, setStartIndex] = useState(0);
 
     const visibleCards = items.slice(startIndex, startIndex + 3);
@@ -39,16 +62,12 @@ function Home() {
 
     return (
         <div className="home">
-            <Navbar />
+
 
             <section className="hero-section">
                 <div className="hero-content">
                     <p className="hero-label">Campus Lost & Found</p>
                     <h1>Lost or Found an Item on Campus?</h1>
-                    <p className="hero-text">
-                        Report missing items, share found belongings, and help return them
-                        to the right person.
-                    </p>
                 </div>
             </section>
 
@@ -69,14 +88,23 @@ function Home() {
                 </div>
 
                 <div className="cards-row">
-                    {visibleCards.map((item, index) => (
-                        <div className="item-card" key={index}>
+                    {visibleCards.map((item) => (
+                        <Link
+                            to={`/lostfound?category=${item.name}`}
+                            className="item-card"
+                            key={item.name}
+                        >
                             <img src={item.img} alt={item.name} />
                             <p>{item.name}</p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </section>
+
+            <div>
+      <h1>Lost & Found Map</h1>
+      <ItemsMap items={items2} />
+    </div>
         </div>
     );
 }

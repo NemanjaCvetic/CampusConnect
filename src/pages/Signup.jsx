@@ -26,6 +26,12 @@ function Signup({ setLogged }) {
         />
 
         <input
+          //type="num"
+          placeholder="Student number"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <input
           type="password"
           placeholder="Password"
           value={password}
@@ -34,7 +40,7 @@ function Signup({ setLogged }) {
 
         <input
           type="password"
-          placeholder="Repeate password"
+          placeholder="Repeat password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

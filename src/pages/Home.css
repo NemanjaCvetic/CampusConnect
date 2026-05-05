@@ -1,11 +1,16 @@
 .home {
-  min-height: 100vh;
-  background-color: white;
+  min-height: 89vh;
+  background-color: red;
+  background-image:linear-gradient(rgba(243, 239, 239, 0.4), rgba(234, 234, 234, 0.4)), url("https://siol.net/media/img/f6/2a/347bbe66484e26658cb0-univerza-na-primorskem.jpeg");
+    background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
 }
 
 .hero-section {
   display: flex;
-  justify-content: flex-end;
+  margin-left: 10%;
   padding: 80px 80px 40px 80px;
 }
 
@@ -17,7 +22,6 @@
 .hero-label {
   font-size: 14px;
   font-weight: 600;
-  color: var(--primary);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 16px;
@@ -26,14 +30,15 @@
 .hero-content h1 {
   font-size: 64px;
   line-height: 1.05;
-  color: var(--primary);
+  color: black;
   margin-bottom: 20px;
 }
+
 
 .hero-text {
   font-size: 20px;
   line-height: 1.6;
-  color: var(--text-light);
+
   max-width: 560px;
 }
 
@@ -50,7 +55,7 @@
 
 .cards-header h2 {
   font-size: 28px;
-  color: var(--primary);
+  color: black;
 }
 
 .arrow-buttons {
@@ -92,7 +97,7 @@
   border-radius: 22px;
 
   display: flex;
-  flex-direction: column; /* IMPORTANT */
+  flex-direction: column; 
   justify-content: center;
   align-items: center;
   gap: 12px;
@@ -106,17 +111,17 @@
   transform: translateY(-8px);
 }
 
-/* image styling */
+
 .item-card img {
   width: 80px;
   height: 80px;
   object-fit: contain;
 }
 
-/* text */
+
 .item-card p {
   font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 600;
-  color: var(--primary);
+  color: black;
 }
