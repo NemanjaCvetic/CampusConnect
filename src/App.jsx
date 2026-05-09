@@ -21,7 +21,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
 
-    const [isLogged, setLogged] = useState(false);
+    // Read from localStorage on startup so the user stays logged in on refresh
+    const [isLogged, setLogged] = useState(() => {
+        return !!localStorage.getItem("token");
+    });
+
+    function handleLogout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setLogged(false);
+    }
+    
   return (
     <Router>
       <Navbar isLogged = {isLogged} />

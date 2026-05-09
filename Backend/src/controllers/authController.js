@@ -4,12 +4,12 @@ import pool from "../config/db.js";
 
 // ── Register ──────────────────────────────────────────────────────────────────
 // POST /api/auth/register
-// Expects: { name, email, password }
+// Expects: { name, student_number, email, password }
 export async function register(req, res) {
-    const { name, email, password } = req.body;
+    const { name, student_number, email, password } = req.body;
 
     // 1. Check all fields are present
-    if (!name || !email || !password) {
+    if (!name || !student_number || !email || !password) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -23,6 +23,11 @@ export async function register(req, res) {
         return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
 
+    // 4. Validate student number is numeric
+    if (!/^\d+$/.test(student_number)) {
+        return res.status(400).json({ message: "Student number must contain only digits" });
+    }
+
     try {
         // 4. Check if email is already registered
         const [existing] = await pool.query(
@@ -33,14 +38,23 @@ export async function register(req, res) {
             return res.status(409).json({ message: "Email already registered" });
         }
 
+        // 6. Check if student number is already registered
+        const [existingStudent] = await pool.query(
+            "SELECT id FROM users WHERE student_number = ?",
+            [student_number]
+        );
+        if (existingStudent.length > 0) {
+            return res.status(409).json({ message: "Student number already registered" });
+        }
+
         // 5. Hash the password — never store plain text passwords
         // 10 is the "salt rounds" — higher = more secure but slower
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // 6. Insert the new user into the database
         const [result] = await pool.query(
-            "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-            [name, email, hashedPassword]
+            "INSERT INTO users (name, student_number, email, password) VALUES (?, ?, ?, ?)",
+            [name, student_number, email, hashedPassword]
         );
 
         // 7. Return success with the new user's id
@@ -69,7 +83,7 @@ export async function login(req, res) {
     try {
         // 2. Find the user by email
         const [rows] = await pool.query(
-            "SELECT id, name, email, password, role FROM users WHERE email = ?",
+            "SELECT id, name, student_number, email, password, role FROM users WHERE email = ?",
             [email]
         );
 
@@ -104,6 +118,7 @@ export async function login(req, res) {
             user: {
                 id: user.id,
                 name: user.name,
+                student_number: user.student_number,
                 email: user.email,
                 role: user.role,
             },

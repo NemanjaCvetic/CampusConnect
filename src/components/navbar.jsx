@@ -2,9 +2,18 @@ import "./navbar.css";
 import {useNavigate} from "react-router-dom"
 import logoImg from "../assets/www.famnit.upr.png";
 import { Link } from "react-router-dom";
-function Navbar() {
+function Navbar({ isLogged, onLogout }) {
 
   const navigate = useNavigate();
+
+  function handleLogout() {
+        onLogout();
+        navigate("/");
+    }
+
+    // Read user info from localStorage to show name and check role
+    const user = JSON.parse(localStorage.getItem("user") || "null");
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -21,8 +30,25 @@ function Navbar() {
       </div>
 
       <div className="navbar-right">
-        <button onClick={() => navigate("/login")} className="login-btn">Login</button>
-        <button onClick={() => navigate("/signup")} className="signup-btn">Sign Up</button>
+        {isLogged ? (
+                    <>
+                        <span style={{ fontSize: "15px", color: "var(--text-light)" }}>
+                            Hi, {user?.name}
+                        </span>
+                        <button onClick={handleLogout} className="login-btn">
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <button onClick={() => navigate("/login")} className="login-btn">
+                            Login
+                        </button>
+                        <button onClick={() => navigate("/signup")} className="signup-btn">
+                            Sign Up
+                        </button>
+                    </>
+                )}
       </div>
     </nav>
   );
