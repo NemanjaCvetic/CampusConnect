@@ -4,6 +4,8 @@ export async function fetchItems(filters = {}) {
   const params = new URLSearchParams();
   if (filters.type)     params.append("type", filters.type);
   if (filters.category) params.append("category", filters.category);
+  if (filters.status)   params.append("status", filters.status);
+  if (filters.userId)   params.append("userId", filters.userId);
   const res = await fetch(`${BASE}/items?${params}`);
   if (!res.ok) throw new Error("Failed to fetch items");
   return res.json();

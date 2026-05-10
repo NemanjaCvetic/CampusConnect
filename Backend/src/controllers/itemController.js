@@ -3,7 +3,7 @@ import pool from "../config/db.js";
 // ── GET /api/items ─────────────────────────────────────────────────────────────
 // Public. Supports ?type=lost|found  &  ?category=Electronics etc.
 export async function getItems(req, res) {
-  const { type, category } = req.query;
+  const { type, category, status, userId } = req.query;
 
   let sql = `
     SELECT i.id, i.type, i.title, i.description, i.category,
@@ -12,14 +12,14 @@ export async function getItems(req, res) {
            (SELECT image_url FROM images WHERE item_id = i.id LIMIT 1) AS thumbnail
     FROM items i
     JOIN users u ON i.user_id = u.id
-    WHERE i.status = 'open'
+    WHERE 1=1
   `;
 
-  if (!req.query.status || req.query.status !== "all") {
-  sql += " AND i.status = 'open'";
-}
   const params = [];
 
+  if (!status || status !== "all") {
+    sql += " AND i.status = 'open'";
+  }
   if (type) {
     sql += " AND i.type = ?";
     params.push(type);
@@ -27,6 +27,10 @@ export async function getItems(req, res) {
   if (category) {
     sql += " AND i.category = ?";
     params.push(category);
+  }
+  if (userId) {
+    sql += " AND i.user_id = ?";
+    params.push(userId);
   }
 
   sql += " ORDER BY i.created_at DESC";

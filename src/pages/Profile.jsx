@@ -1,96 +1,65 @@
+import { useState, useEffect } from "react";
 import "./Profile.css";
-
-const requests = [
-  {
-    id: 1,
-    item: "Black Wallet",
-    date: "2026-04-19",
-    status: "Pending",
-  },
-  {
-    id: 2,
-    item: "Silver Keys",
-    date: "2026-04-15",
-    status: "Approved",
-  },
-];
-
-const solvedIssues = [
-  {
-    id: 1,
-    item: "Student ID Card",
-    resolvedDate: "2026-04-10",
-    note: "Returned to owner",
-  },
-  {
-    id: 2,
-    item: "Blue Notebook",
-    resolvedDate: "2026-04-05",
-    note: "Claim verified successfully",
-  },
-];
-
-const inboxMessages = [
-  {
-    id: 1,
-    title: "Request Approved",
-    message: "Your request for Silver Keys was approved.",
-    date: "2026-04-16",
-  },
-  {
-    id: 2,
-    title: "Possible Match Found",
-    message: "A possible match was found for your lost wallet report.",
-    date: "2026-04-14",
-  },
-];
+import { fetchItems } from "../api/items";
 
 function Profile() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [myItems, setMyItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchItems({ userId: user?.id, status: "all" })
+      .then(data => setMyItems(data))
+      .catch(() => setMyItems([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const resolvedItems = myItems.filter(i => i.status === "resolved");
+  const openItems = myItems.filter(i => i.status === "open");
+
   return (
     <div className="profile-page">
       <div className="profile-header-card">
         <h1>My Profile</h1>
-        <p><strong>Name:</strong> Elena Nenadović</p>
-        <p><strong>Student ID:</strong> 12345678</p>
+        <p><strong>Name:</strong> {user?.name}</p>
+        <p><strong>Student ID:</strong> {user?.student_number}</p>
       </div>
 
       <div className="profile-section">
-        <h2>Your Requests</h2>
-        <div className="profile-grid">
-          {requests.map((request) => (
-            <div key={request.id} className="profile-card">
-              <h3>{request.item}</h3>
-              <p><strong>Date:</strong> {request.date}</p>
-              <p><strong>Status:</strong> {request.status}</p>
-            </div>
-          ))}
-        </div>
+        <h2>Your Active Reports</h2>
+        {loading ? <p>Loading...</p> : (
+          <div className="profile-grid">
+            {openItems.length === 0 && <p>No active reports.</p>}
+            {openItems.map(item => (
+              <div key={item.id} className="profile-card">
+                <h3>{item.title}</h3>
+                <p><strong>Type:</strong> {item.type}</p>
+                <p><strong>Category:</strong> {item.category}</p>
+                <p><strong>Date:</strong> {item.created_at?.slice(0, 10)}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="profile-section">
-        <h2>History of Solved Issues</h2>
-        <div className="profile-grid">
-          {solvedIssues.map((issue) => (
-            <div key={issue.id} className="profile-card">
-              <h3>{issue.item}</h3>
-              <p><strong>Resolved:</strong> {issue.resolvedDate}</p>
-              <p>{issue.note}</p>
-            </div>
-          ))}
-        </div>
+        <h2>Resolved Items</h2>
+        {loading ? <p>Loading...</p> : (
+          <div className="profile-grid">
+            {resolvedItems.length === 0 && <p>No resolved items yet.</p>}
+            {resolvedItems.map(item => (
+              <div key={item.id} className="profile-card">
+                <h3>{item.title}</h3>
+                <p><strong>Category:</strong> {item.category}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="profile-section">
         <h2>Inbox</h2>
-        <div className="inbox-list">
-          {inboxMessages.map((msg) => (
-            <div key={msg.id} className="inbox-card">
-              <h3>{msg.title}</h3>
-              <p>{msg.message}</p>
-              <span>{msg.date}</span>
-            </div>
-          ))}
-        </div>
+        <p className="profile-muted">Messaging coming soon.</p>
       </div>
     </div>
   );
