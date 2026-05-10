@@ -1,8 +1,12 @@
 import { useState } from "react";
 import "./ReportLost.css";
 import { useNavigate } from "react-router-dom";
+import { createItem } from "../api/items";
+
+
 
 function ReportLost() {
+  
   const [formData, setFormData] = useState({
     itemName: "",
     category: "",
@@ -15,7 +19,7 @@ function ReportLost() {
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-   const navigate = useNavigate()
+   const navigate = useNavigate();
 
   const categories = [
     "Electronics",
@@ -68,29 +72,21 @@ function ReportLost() {
     return newErrors;
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const validationErrors = validateForm();
-   ;
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Lost item report:", formData);
-      setSubmitted(true);
-
-      setFormData({
-        itemName: "",
-        category: "",
-        description: "",
-        dateLost: "",
-        location: "",
-        email: "",
-        photo: null,
-      });
-      navigate("/");
-    }
+  async function handleSubmit(e) {
+  e.preventDefault();
+  try {
+    await createItem({
+      type: "lost",        
+      title,
+      description,
+      category,
+      location,
+    });
+    navigate("/lost-found");
+  } catch (err) {
+    setError(err.message);
   }
+}
 
   return (
     <section className="report-page">

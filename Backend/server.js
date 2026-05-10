@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import "./src/config/db.js"; // runs the connection test on startup
 import authRoutes from "./src/routes/authRoutes.js";
+import itemRoutes from "./src/routes/itemRoutes.js";
+import adminRoutes from './src/routes/adminRoutes.js';
 
 
 dotenv.config();
@@ -37,6 +39,8 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 
+app.use("/api/items", itemRoutes);
+app.use("/api/admin", adminRoutes);
 // ── Start server ──────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

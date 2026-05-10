@@ -14,6 +14,10 @@ export async function getItems(req, res) {
     JOIN users u ON i.user_id = u.id
     WHERE i.status = 'open'
   `;
+
+  if (!req.query.status || req.query.status !== "all") {
+  sql += " AND i.status = 'open'";
+}
   const params = [];
 
   if (type) {

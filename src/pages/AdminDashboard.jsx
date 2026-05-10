@@ -1,19 +1,19 @@
 import "./Admin.css";
-import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-function AdminDashboard() {
+import { Link,Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-  const item = [
-    {
-      id: 1,
-      title: "Black Wallet",
-      category: "Accessories",
-      location: "Library",
-      date: "2026-04-18",
-      status: "Lost",
-      description: "Black leather wallet with student card inside.",
-    },
-  ];
+function AdminDashboard() {
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/admin/stats', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
+      .then(r => r.json())
+      .then(data => setStats(data));
+  }, []);
+
+  if (!stats) return <p>Loading...</p>;
 
   return (
     <div className="admin-page">
@@ -24,53 +24,35 @@ function AdminDashboard() {
 
       <div className="admin-content">
         <div className="admin-content-1">
-          <h1 className="admin-card-title">The Most Recent Issue</h1>
-
+          <h1 className="admin-card-title">Items</h1>
           <div className="admin-card-1">
-            <div className="admin-details">
-              <p className={`status-badge ${item[0].status.toLowerCase()}`}>
-                {item[0].status}
-              </p>
-              <p className="admin-category">{item[0].category}</p>
-            </div>
-
-            <h1 className="admin-title">{item[0].title}</h1>
-            <p className="description">{item[0].description}</p>
-
-            <div className="admin-period">
-              <p className="location">Location: {item[0].location}</p>
-              <p className="date">Date: {item[0].date}</p>
-            </div>
-
-            <Link to = "/items">
-            <button className="users-button">See all items</button>
-        </Link>
+            <p className="description">Total items: <strong>{stats.totalItems}</strong></p>
+            <p className="description">Resolved: <strong>{stats.resolvedItems}</strong></p>
+            <Link to="/items">
+              <button className="users-button">See all items</button>
+            </Link>
           </div>
         </div>
 
         <div className="admin-content-1">
           <h1 className="admin-card-title">Users</h1>
-
           <div className="admin-card-1">
-            <div className="admin-details">
-              <p className="admin-category">Admins</p>
-              <p className="admin-category">Students</p>
-              
-            </div>
-
-            <br />
-
-            <p className="description">
-              There are currently {item.length + 1} users.
-            </p>
-            <Link to = "/users">
-            <button className="users-button">See all users</button>
+            <p className="description">Total users: <strong>{stats.totalUsers}</strong></p>
+            <Link to="/users">
+              <button className="users-button">See all users</button>
             </Link>
           </div>
         </div>
 
-    
-
+        <div className="admin-content-1">
+          <h1 className="admin-card-title">Claims</h1>
+          <div className="admin-card-1">
+            <p className="description">Pending claims: <strong>{stats.pendingClaims}</strong></p>
+            <Link to="/admin/claims">
+              <button className="users-button">See all claims</button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

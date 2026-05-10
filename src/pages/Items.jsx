@@ -1,76 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Items.css";
+import { fetchItems, deleteItem } from "../api/items";
 
 function Items() {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      title: "Black Wallet",
-      type: "Lost",
-      category: "Accessories",
-      reporter: "Elena Nenadović",
-      status: "Open",
-      date: "2026-04-18",
-    },
-    {
-      id: 2,
-      title: "White AirPods Case",
-      type: "Found",
-      category: "Electronics",
-      reporter: "Nemanja Cvetić",
-      status: "Open",
-      date: "2026-04-20",
-    },
-    {
-      id: 2,
-      title: "White AirPods Case",
-      type: "Found",
-      category: "Electronics",
-      reporter: "Nemanja Cvetić",
-      status: "Open",
-      date: "2026-04-20",
-    },{
-      id: 2,
-      title: "White AirPods Case",
-      type: "Found",
-      category: "Electronics",
-      reporter: "Nemanja Cvetić",
-      status: "Open",
-      date: "2026-04-20",
-    },{
-      id: 2,
-      title: "White AirPods Case",
-      type: "Found",
-      category: "Electronics",
-      reporter: "Nemanja Cvetić",
-      status: "Open",
-      date: "2026-04-20",
-    },{
-      id: 2,
-      title: "White AirPods Case",
-      type: "Found",
-      category: "Electronics",
-      reporter: "Nemanja Cvetić",
-      status: "Open",
-      date: "2026-04-20",
-    },{
-      id: 2,
-      title: "White AirPods Case",
-      type: "Found",
-      category: "Electronics",
-      reporter: "Nemanja Cvetić",
-      status: "Open",
-      date: "2026-04-20",
-    },{
-      id: 2,
-      title: "White AirPods Case",
-      type: "Found",
-      category: "Electronics",
-      reporter: "Nemanja Cvetić",
-      status: "Open",
-      date: "2026-04-20",
-    },
-  ]);
+  
+
+  const [items, setItems]     = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // fetch ALL items including resolved — you'll need a backend param for admin
+    fetchItems()
+      .then(setItems)
+      .finally(() => setLoading(false));
+  }, []);
+
+  async function handleDelete(id) {
+    await deleteItem(id);
+    setItems(prev => prev.filter(i => i.id !== id));
+  }
 
   const [sortField, setSortField] = useState("date");
   const [sortDirection, setSortDirection] = useState("desc");
