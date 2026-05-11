@@ -34,7 +34,7 @@ function App() {
     
   return (
     <Router>
-      <Navbar isLogged = {isLogged} />
+      <Navbar isLogged={isLogged} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
