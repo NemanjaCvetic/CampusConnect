@@ -6,6 +6,7 @@ import authRoutes from "./src/routes/authRoutes.js";
 import itemRoutes from "./src/routes/itemRoutes.js";
 import adminRoutes from './src/routes/adminRoutes.js';
 import messageRoutes from "./src/routes/messageRoutes.js";
+import claimRoutes from './src/routes/claimRoutes.js';
 
 
 dotenv.config();
@@ -43,6 +44,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/conversations", messageRoutes);
+app.use("/api/claims", claimRoutes);
 // ── Start server ──────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

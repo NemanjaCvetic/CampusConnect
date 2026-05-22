@@ -1,83 +1,112 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "./RequestPage.css";
 
-const items = [
-  {
-    id: 1,
-    title: "Black Wallet",
-  },
-  {
-    id: 2,
-    title: "Silver Keys",
-  },
-  {
-    id: 3,
-    title: "White AirPods Case",
-  },
-];
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 function RequestPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const selectedItem = items.find((item) => item.id === Number(id));
+  const [item, setItem] = useState(null);
+  const [secretAnswer, setSecretAnswer] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  // Fetch the real item from the backend
+  useEffect(() => {
+    fetch(`${API_URL}/items/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Item not found");
+        return res.json();
+      })
+      .then((data) => {
+        setItem(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [id]);
 
   function handleSubmit(e) {
-    e.preventDefault();
-
-
-    if (!fullName || !email || !message) {
-    alert("Please fill all fields");
+  e.preventDefault();
+  if (!secretAnswer.trim()) {
+    setError("Please describe the item to verify your claim.");
     return;
   }
-  
-    console.log({
-      item: selectedItem?.title,
-      fullName,
-      email,
-      message,
-    });
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    navigate("/login");
+    return;
   }
+
+  setSubmitting(true);
+  setError(null);
+
+  fetch(`${API_URL}/claims`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ item_id: Number(id), secret_answer: secretAnswer }),
+  })
+    .then(async (res) => {
+      const text = await res.text();
+      try {
+        const data = JSON.parse(text);
+        if (!res.ok) throw new Error(data.message || "Failed to submit claim");
+        setSuccess(true);
+      } catch {
+        throw new Error(`Server returned unexpected response (status ${res.status})`);
+      }
+    })
+    .catch((err) => setError(err.message))
+    .finally(() => setSubmitting(false));
+}
+
+  if (loading) return <div className="request-page"><div className="request-card"><p>Loading...</p></div></div>;
+
+  if (success) return (
+    <div className="request-page">
+      <div className="request-card">
+        <h1>Claim Submitted</h1>
+        <p>Your claim for <strong>{item?.title}</strong> has been submitted. The admin will review it shortly.</p>
+        <button className="submit-btn" onClick={() => navigate("/lost-found")}>Back to Listings</button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="request-page">
       <div className="request-card">
         <h1>Request Item</h1>
 
-        <p className="request-item">
-          Item: <strong>{selectedItem?.title}</strong>
-        </p>
+        {item && (
+          <p className="request-item">
+            Item: <strong>{item.title}</strong>
+          </p>
+        )}
+
+        {error && <p className="error-message">{error}</p>}
 
         <form onSubmit={handleSubmit} className="request-form">
-          <input
-            type="text"
-            placeholder="Full name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-          />
-
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-
           <textarea
-            placeholder="Write your message..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Describe the item in detail to prove it belongs to you (e.g. what's inside the wallet, what the keychain looks like)..."
+            value={secretAnswer}
+            onChange={(e) => setSecretAnswer(e.target.value)}
             required
-            rows="5"
-          ></textarea>
+            rows="6"
+          />
 
-          <button type="submit">Send Request</button>
+          <button type="submit" disabled={submitting}>
+            {submitting ? "Submitting..." : "Submit Claim"}
+          </button>
         </form>
       </div>
     </div>
