@@ -1,6 +1,6 @@
 import express from 'express';
 import pool from '../config/db.js';
-import { requireAuth } from '../middleware/authMiddleware.js';
+import { requireAuth, requireAdmin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -38,6 +38,61 @@ router.post('/', requireAuth, async (req, res) => {
     res.status(201).json({ message: 'Claim submitted successfully', claimId: result.insertId });
   } catch (err) {
     console.error('Claim error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// GET /api/claims — list all claims with item + claimant info (admin only)
+router.get('/', requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const [claims] = await pool.query(`
+      SELECT
+        c.id, c.status, c.claimant_answer, c.created_at,
+        i.id AS item_id, i.title AS item_title, i.type AS item_type,
+        u.id AS claimant_id, u.name AS claimant_name, u.email AS claimant_email
+      FROM claims c
+      JOIN items i ON c.item_id = i.id
+      JOIN users u ON c.claimant_id = u.id
+      ORDER BY c.created_at DESC
+    `);
+    res.json(claims);
+  } catch (err) {
+    console.error('Get claims error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// PATCH /api/claims/:id/approve — approve a claim and resolve the item (admin only)
+router.patch('/:id/approve', requireAuth, requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [[claim]] = await pool.query('SELECT * FROM claims WHERE id = ?', [id]);
+    if (!claim) return res.status(404).json({ message: 'Claim not found' });
+    if (claim.status !== 'pending') return res.status(409).json({ message: 'Claim is no longer pending' });
+
+    await pool.query("UPDATE claims SET status = 'approved' WHERE id = ?", [id]);
+    await pool.query("UPDATE items SET status = 'resolved' WHERE id = ?", [claim.item_id]);
+
+    res.json({ message: 'Claim approved and item resolved' });
+  } catch (err) {
+    console.error('Approve claim error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// PATCH /api/claims/:id/reject — reject a claim (admin only)
+router.patch('/:id/reject', requireAuth, requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [[claim]] = await pool.query('SELECT * FROM claims WHERE id = ?', [id]);
+    if (!claim) return res.status(404).json({ message: 'Claim not found' });
+    if (claim.status !== 'pending') return res.status(409).json({ message: 'Claim is no longer pending' });
+
+    await pool.query("UPDATE claims SET status = 'rejected' WHERE id = ?", [id]);
+
+    res.json({ message: 'Claim rejected' });
+  } catch (err) {
+    console.error('Reject claim error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
