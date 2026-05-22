@@ -87,6 +87,141 @@
   color: #7a82b0;
 }
 
+.inbox-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1rem;
+  min-height: 400px;
+}
+
+.inbox-card {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.inbox-card.active {
+  border-color: var(--primary, #01696f);
+  background: #f0f7f7;
+}
+
+.inbox-participants {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.inbox-preview {
+  font-size: 0.85rem;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unread-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: #e05252;
+  color: white;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.4rem;
+}
+
+.message-thread {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.thread-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fafafa;
+}
+
+.thread-header h3 { margin: 0; font-size: 1rem; }
+.thread-header p  { margin: 0; font-size: 0.8rem; color: #888; }
+
+.thread-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.message-bubble.mine {
+  align-self: flex-end;
+  background: #01696f;
+  color: white;
+}
+
+.message-bubble.theirs {
+  align-self: flex-start;
+  background: #f0f0f0;
+  color: #222;
+}
+
+.message-sender {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-bottom: 0.2rem;
+}
+
+.message-time {
+  display: block;
+  font-size: 0.7rem;
+  opacity: 0.6;
+  margin-top: 0.2rem;
+  text-align: right;
+}
+
+.message-form {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.message-form input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.message-form button {
+  padding: 0.5rem 1rem;
+  background: #01696f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.message-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media (max-width: 700px) {
   .profile-page {
     padding: 120px 16px 40px;
