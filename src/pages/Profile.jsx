@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Profile.css";
 import { fetchItems } from "../api/items";
-import { getMyConversations, getMessages, sendMessage } from "../api/messages";
+import { getMyConversations, getMessages, sendMessage, resolveConversation } from "../api/messages";
 
 function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -12,6 +12,7 @@ function Profile() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [sending, setSending] = useState(false);
+  const [resolving, setResolving] = useState(false);
 
   useEffect(() => {
     fetchItems({ userId: user?.id, status: "all" })
@@ -48,6 +49,19 @@ function Profile() {
       setSending(false);
     }
   }
+
+  async function handleResolve(action) {
+  if (!activeConv) return;
+  setResolving(true);
+  try {
+    const msg = await resolveConversation(activeConv.id, action);
+    setMessages(prev => [...prev, msg]);
+  } catch (err) {
+    alert(err.message);
+  } finally {
+    setResolving(false);
+  }
+}
 
   const resolvedItems = myItems.filter(i => i.status === "resolved");
   const openItems = myItems.filter(i => i.status === "open");
@@ -140,6 +154,26 @@ function Profile() {
                     </div>
                   ))}
                 </div>
+
+                {/* Show approve/reject only if the logged-in user is the item owner */}
+{activeConv?.poster_id === user?.id && (
+  <div className="resolve-actions">
+    <button
+      className="btn-approve"
+      onClick={() => handleResolve("approved")}
+      disabled={resolving}
+    >
+      ✅ Approve Claim
+    </button>
+    <button
+      className="btn-reject"
+      onClick={() => handleResolve("rejected")}
+      disabled={resolving}
+    >
+      ❌ Reject Claim
+    </button>
+  </div>
+)}
 
                 <form className="message-form" onSubmit={handleSend}>
                   <input

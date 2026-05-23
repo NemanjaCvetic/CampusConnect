@@ -40,3 +40,12 @@ export async function sendMessage(conversationId, body) {
   if (!res.ok) throw new Error("Failed to send message");
   return res.json();
 }
+export async function resolveConversation(conversationId, action) {
+  const res = await fetch(`${BASE}/conversations/${conversationId}/resolve`, {
+    method: "PATCH",
+    headers: authHeaders(),
+    body: JSON.stringify({ action }),
+  });
+  if (!res.ok) throw new Error("Failed to resolve claim");
+  return res.json();
+}
