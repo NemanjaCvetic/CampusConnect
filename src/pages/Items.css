@@ -1,0 +1,36 @@
+.admin-items-page {
+  padding: 30px;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.items-table th,
+.items-table td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.items-table th {
+  cursor: pointer;
+}
+
+.items-table th:hover {
+  background-color: #f3f3f3;
+}
+
+.delete-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ffdddd;
+  color: #b00020;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #ffbdbd;
+}

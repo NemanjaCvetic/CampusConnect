@@ -1,0 +1,30 @@
+.users-page {
+  padding: 30px;
+  padding-bottom: 20%;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+    text-align: center;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.role.admin {
+  color: rgb(97, 39, 39);
+}
+
+.role.student {
+  color: rgb(36, 36, 78);
+}
+
+.users-button{
+    border:0;
+    border-radius: 20px;
+    padding: 10px;
+}

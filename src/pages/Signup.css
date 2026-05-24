@@ -1,0 +1,81 @@
+.auth-page {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+ background-image: url("https://upload.wikimedia.org/wikipedia/commons/6/6a/Koper_%28Titov_trg%29_-_Foresteria_in_Armeria.jpg");
+ background-size: cover;     
+  background-position: center;  
+  background-repeat: no-repeat;
+}
+
+.auth-card {
+    margin-top: 10%;
+  width: 25%;
+  min-width: 350px;
+  height: 30%;
+  background: white;
+  padding: 3%;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(28, 36, 73, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+
+.auth-card p {
+  color: #1a1c42;
+  font-size: 0.9rem;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-card input {
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: #2d6cdf;
+}
+
+.auth-card button {
+  padding: 0.9rem;
+  align-self: center;
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  background: #1f3152;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.auth-card button:hover {
+  background: #5a6681;
+}
+
+.auth-card a {
+  color: #396ed2;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-card a:hover {
+  text-decoration: underline;
+}
+
+
+@media (max-width: 500px) {
+  .auth-card {
+    width: 90%; 
+  }
+}

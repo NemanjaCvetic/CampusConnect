@@ -1,0 +1,40 @@
+.admin-claims-page {
+  padding: 30px;
+}
+
+.claims-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.claims-table th,
+.claims-table td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.approve-btn,
+.reject-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 4px;
+}
+
+.approve-btn {
+  background-color: #ddf7e5;
+  color: #116b2f;
+}
+
+.reject-btn {
+  background-color: #ffe1e1;
+  color: #b00020;
+}
+
+.empty-message {
+  margin-top: 20px;
+  color: #777;
+}
