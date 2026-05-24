@@ -2,107 +2,152 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../api/auth.js";
 import "./Signup.css"
+
+
 function Signup({ setLogged }) {
 
-    const [name, setName] = useState("");
-    const [studentNumber, setStudentNumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [studentNumber, setStudentNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
-    const navigate = useNavigate();
-    async function handleSubmit(e) {
-        e.preventDefault();
-        setError("");
+  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+  const [termsError, setTermsError] = useState("")
 
-        // Client-side validation before hitting the API
-        if (password !== confirmPassword) {
-            return setError("Passwords do not match");
-        }
+  const navigate = useNavigate();
 
-        if (!email.endsWith("@student.upr.si")) {
-            return setError("Only @student.upr.si emails are allowed");
-        }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
 
-        if (!/^\d+$/.test(studentNumber)) {
-            return setError("Student number must contain only digits");
-        }
 
-        setLoading(true);
-
-        try {
-            await registerUser(name, studentNumber, email, password);
-            // Registration successful — redirect to login
-            navigate("/login");
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
+    if (!/^\d+$/.test(studentNumber)) {
+      return setError("Student number must contain only digits");
     }
 
-    
-    return (
-  <div className="auth-page">
-    <div className="auth-card">
-      <h1>Sign Up</h1>
-            {error && (
+    if (!email.endsWith("@student.upr.si")) {
+      return setEmailError("Only @student.upr.si emails are allowed");
+    }
+
+    if (password !== confirmPassword) {
+      return setPasswordError("Passwords do not match");
+    }
+
+    if (password.length < 6) {
+      return setPasswordError("Password must be at least 6 characters");
+    }
+
+    if (!agreed) {
+      return setTermsError("You must agree to the Terms and Services");
+    }
+
+    setLoading(true);
+
+    try {
+      await registerUser(name, studentNumber, email, password);
+      navigate("/login");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
+  return (
+    <div className="auth-page">
+      <div className="auth-card">
+        <h1>Sign Up</h1>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+
+          <input
+            type="text"
+            placeholder="Student number"
+            value={studentNumber}
+            onChange={(e) => setStudentNumber(e.target.value)}
+            required
+          />
+
+          {error && (
             <p style={{ color: "red", fontSize: "0.9rem" }}>{error}</p>
-                )}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+          )}
 
-        <input
-          type="text"
-          placeholder="Student number"
-          value={studentNumber}
-          onChange={(e) => setStudentNumber(e.target.value)}
-          reqired
-        />
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError("");
+            }}
+            required
+          />
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+          {emailError && (
+            <p style={{ color: "red", fontSize: "0.9rem" }}>{emailError}</p>
+          )}
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => { setPassword(e.target.value); setPasswordError(""); }}
+            required
+          />
 
-        <input
-          type="password"
-          placeholder="Repeat password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
+          {passwordError && (
+            <p style={{ color: "red", fontSize: "0.9rem" }}>{passwordError}</p>
+          )}
 
-        <button type="submit" disabled={loading}>
-        {loading ? "Creating account..." : "Sign Up"}
-        </button>
-      </form>
+          <input
+            type="password"
+            placeholder="Repeat password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
 
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+          <div className="checkbox-group">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+            />
+
+            <label htmlFor="terms">
+              I agree to the Terms and Services
+            </label>
+          </div>
+
+          {termsError && (
+            <p style={{ color: "red", fontSize: "0.9rem" }}>{termsError}</p>
+          )}
+
+          <button type="submit" disabled={loading}>
+            {loading ? "Creating account..." : "Sign Up"}
+          </button>
+        </form>
+
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
 
 }
 
