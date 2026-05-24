@@ -8,34 +8,35 @@ import { fetchItems } from "../api/items";
 function LostFound() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
   const categoryFromHome = searchParams.get("category");
   const [statusFilter, setStatusFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState(categoryFromHome || "all");
 
-const [items, setItems]     = useState([]);
-const [loading, setLoading] = useState(true);
-const [error, setError]     = useState(null);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-useEffect(() => {
-  setLoading(true);
-  const params = new URLSearchParams();
-  if (statusFilter !== "all")   params.append("type", statusFilter);
-  if (categoryFilter !== "all") params.append("category", categoryFilter);
-
-  fetch(`http://localhost:3000/api/items?${params}`)
-    .then(res => res.json())
-    .then(data => { setItems(data); setLoading(false); })
-    .catch(() => { setError("Failed to load items."); setLoading(false); });
-}, [statusFilter, categoryFilter]);
+  useEffect(() => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    if (statusFilter !== "all") params.append("type", statusFilter);
+    if (categoryFilter !== "all") params.append("category", categoryFilter);
+    params.append("status", "open");
+    fetch(`http://localhost:3000/api/items?${params}`)
+      .then(res => res.json())
+      .then(data => { setItems(data); setLoading(false); })
+      .catch(() => { setError("Failed to load items."); setLoading(false); });
+  }, [statusFilter, categoryFilter]);
 
   const categories = [
-  "Electronics",
-  "Documents",
-  "Food & Drinks",
-  "Books",
-  "Valuables",
-  "Other",
-];
+    "Electronics",
+    "Documents",
+    "Food & Drinks",
+    "Books",
+    "Valuables",
+    "Other",
+  ];
 
 
   return (
@@ -51,7 +52,7 @@ useEffect(() => {
         </Link>
 
         <Link to="/report-found">
-        <button className="found-btn">Report Found Item</button>
+          <button className="found-btn">Report Found Item</button>
         </Link>
       </div>
 
@@ -90,9 +91,8 @@ useEffect(() => {
           {categories.map((category) => (
             <button
               key={category}
-              className={`filter-btn ${
-                categoryFilter === category ? "active" : ""
-              }`}
+              className={`filter-btn ${categoryFilter === category ? "active" : ""
+                }`}
               onClick={() => setCategoryFilter(category)}
             >
               {category}
@@ -102,7 +102,7 @@ useEffect(() => {
       </div>
 
       {loading && <p className="loading-msg">Loading items...</p>}
-      {error   && <p className="error-msg">{error}</p>}
+      {error && <p className="error-msg">{error}</p>}
 
       <div className="items-grid">
         {items.length === 0 ? (
@@ -116,7 +116,7 @@ useEffect(() => {
             >
               <div className="item-top">
                 <span className={`status-badge ${item.type}`}>
-                    {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                  {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
                 </span>
                 <span className="item-category">{item.category}</span>
               </div>

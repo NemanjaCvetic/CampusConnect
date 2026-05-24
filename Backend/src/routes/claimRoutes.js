@@ -42,7 +42,7 @@ router.post('/', requireAuth, async (req, res) => {
   }
 });
 
-// GET /api/claims — list all claims with item + claimant info (admin only)
+// GET /api/claims 
 router.get('/', requireAuth, requireAdmin, async (req, res) => {
   try {
     const [claims] = await pool.query(`

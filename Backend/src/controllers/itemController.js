@@ -15,8 +15,9 @@ export async function getItems(req, res) {
 
   const params = [];
 
-  if (!status || status !== "all") {
-    sql += " AND i.status = 'open'";
+  if (status && status !== "all") {
+    sql += " AND i.status = ?";
+    params.push(status);
   }
   if (type) {
     sql += " AND i.type = ?";

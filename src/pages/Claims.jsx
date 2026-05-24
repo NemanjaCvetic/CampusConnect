@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Claims.css";
-
+import { fetchClaims } from "../api/claims";
 function Claims() {
-  const [claims, setClaims] = useState([
-    {
-      id: 1,
-      itemTitle: "Black Wallet",
-      claimantName: "Ana Novak",
-      submittedAnswer: "It has my student card inside.",
-      correctAnswer: "Student card and bank card inside.",
-      status: "pending",
-    },
-    {
-      id: 2,
-      itemTitle: "White AirPods Case",
-      claimantName: "Marko Horvat",
-      submittedAnswer: "There is a small scratch on the front.",
-      correctAnswer: "Small scratch on the front and initials E.N.",
-      status: "disputed",
-    },
-  ]);
+  const [claims, setClaims] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(
+    () => {
+      setLoading(true);
+      const params = new URLSearchParams();
+      fetchClaims()
+        .then(data => {
+          setClaims(data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setError("Failed to load claims");
+          setLoading(false);
+        });
+    }, []
+  );
 
   function handleDecision(id, decision) {
     setClaims(
@@ -48,17 +48,15 @@ function Claims() {
             <th>Submitted Answer</th>
             <th>Correct Answer</th>
             <th>Status</th>
-            <th>Action</th>
           </tr>
         </thead>
 
         <tbody>
           {visibleClaims.map((claim) => (
             <tr key={claim.id}>
-              <td>{claim.itemTitle}</td>
-              <td>{claim.claimantName}</td>
-              <td>{claim.submittedAnswer}</td>
-              <td>{claim.correctAnswer}</td>
+              <td>{claim.item_title}</td>
+              <td>{claim.claimant_name}</td>
+              <td>{claim.claimant_answer}</td>
               <td>{claim.status}</td>
               <td>
                 <button
