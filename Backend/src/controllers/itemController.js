@@ -162,8 +162,6 @@ export async function resolveItem(req, res) {
   }
 }
 
-// ── DELETE /api/items/:id ──────────────────────────────────────────────────────
-// Protected. Owner or admin deletes item (images cascade via FK).
 export async function deleteItem(req, res) {
   const { id } = req.params;
 

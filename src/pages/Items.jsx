@@ -30,10 +30,6 @@ function Items() {
     }
   }
 
-  function handleDelete(id) {
-    setItems(items.filter((item) => item.id !== id));
-  }
-
   const sortedItems = [...items].sort((a, b) => {
     const valueA = a[sortField];
     const valueB = b[sortField];
