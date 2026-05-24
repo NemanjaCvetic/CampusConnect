@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 function AdminDashboard() {
   const [stats, setStats] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
   useEffect(() => {
     fetch('http://localhost:3000/api/admin/stats', {
@@ -19,7 +20,7 @@ function AdminDashboard() {
     <div className="admin-page">
       <div className="admin-intro">
         <h1>Admin Dashboard</h1>
-        <p>Welcome Admin</p>
+        <p>Welcome Admin <span style={{ fontWeight: "bold", fontStyle: "italic" }}>{user?.name}</span></p>
       </div>
 
       <div className="admin-content">
