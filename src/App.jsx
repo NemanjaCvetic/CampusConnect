@@ -18,10 +18,13 @@ import "leaflet/dist/leaflet.css";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 function App() {
 
-  // Read from localStorage on startup so the user stays logged in on refresh
+
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
   const [isLogged, setLogged] = useState(() => {
     return !!localStorage.getItem("token");
   });
@@ -60,22 +63,25 @@ function App() {
           },
         }}
       />
-      
+
       <Navbar isLogged={isLogged} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login setLogged={setLogged} />} />
         <Route path="/signup" element={<Signup setLogged={setLogged} />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={user?.role === "student" ? <Profile /> : <Navigate to = "/"/>} />
         <Route path="/request/:id" element={<RequestPage />} />
         <Route path="/lostfound" element={<LostFound />} />
         <Route path="/report-lost" element={<ReportLost />} />
         <Route path="/report-found" element={<ReportFound />} />
-        <Route path="/admin" element={<AdminDashboard />}></Route>
-        <Route path="/users" element={<Users />}></Route>
-        <Route path="/items" element={<Items />}></Route>
-        <Route path="/admin/claims" element={<Claims />} />
+
+        <Route path="/admin" element={user?.role === "admin" ? <AdminDashboard /> : <Navigate to="/"/>}></Route>
+        <Route path="/users" element={user?.role ==="admin" ? <Users /> : <Navigate to="/"/>}></Route>
+        <Route path="/items" element={user?.role === "admin" ? <Items /> : <Navigate to="/"/>}></Route>
+        <Route path="/admin/claims" element={user?.role === "admin" ? <Claims /> : <Navigate to ="/"/>} />
+
+
       </Routes>
       <Footbar />
     </Router>
