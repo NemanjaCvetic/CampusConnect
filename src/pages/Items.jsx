@@ -9,7 +9,6 @@ function Items() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // fetch ALL items including resolved — you'll need a backend param for admin
     fetchItems()
       .then(setItems)
       .finally(() => setLoading(false));
@@ -70,7 +69,7 @@ function Items() {
               <td>{item.title}</td>
               <td>{item.type}</td>
               <td>{item.category}</td>
-              <td>{item.reporter}</td>
+              <td>{item.reporter_name}</td>
               <td>{item.status}</td>
               <td>{item.date}</td>
               <td>
