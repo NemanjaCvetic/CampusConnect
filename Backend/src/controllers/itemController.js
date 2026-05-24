@@ -1,7 +1,5 @@
 import pool from "../config/db.js";
 
-// ── GET /api/items ─────────────────────────────────────────────────────────────
-// Public. Supports ?type=lost|found  &  ?category=Electronics etc.
 export async function getItems(req, res) {
   const { type, category, status, userId } = req.query;
 
@@ -43,6 +41,9 @@ export async function getItems(req, res) {
     return res.status(500).json({ message: "Server error" });
   }
 }
+
+
+
 
 // ── GET /api/items/:id ─────────────────────────────────────────────────────────
 // Public. Returns item + all its images.

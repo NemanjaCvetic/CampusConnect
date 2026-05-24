@@ -53,9 +53,9 @@ function Items() {
             <th onClick={() => handleSort("title")}>Title</th>
             <th onClick={() => handleSort("type")}>Type</th>
             <th onClick={() => handleSort("category")}>Category</th>
-            <th onClick={() => handleSort("reporter")}>Reporter</th>
+            <th onClick={() => handleSort("reporter_name")}>Reporter</th>
             <th onClick={() => handleSort("status")}>Status</th>
-            <th onClick={() => handleSort("date")}>Date</th>
+            <th onClick={() => handleSort("created_at")}>Date</th>
             <th>Action</th>
           </tr>
         </thead>
