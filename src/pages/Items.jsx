@@ -4,7 +4,6 @@ import { fetchItems, deleteItem } from "../api/items";
 
 function Items() {
   
-
   const [items, setItems]     = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,8 +31,6 @@ function Items() {
   }
 
   function handleDelete(id) {
-   
-
     setItems(items.filter((item) => item.id !== id));
   }
 
@@ -71,7 +68,7 @@ function Items() {
               <td>{item.category}</td>
               <td>{item.reporter_name}</td>
               <td>{item.status}</td>
-              <td>{item.date}</td>
+              <td>{new Date(item.created_at).toLocaleDateString()}</td>
               <td>
                 <button
                   className="delete-btn"
