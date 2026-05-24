@@ -6,7 +6,7 @@ import { createItem } from "../api/items";
 
 
 function ReportLost() {
-  
+
   const [formData, setFormData] = useState({
     itemName: "",
     category: "",
@@ -19,7 +19,7 @@ function ReportLost() {
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const categories = [
     "Electronics",
@@ -73,20 +73,31 @@ function ReportLost() {
   }
 
   async function handleSubmit(e) {
-  e.preventDefault();
-  try {
-    await createItem({
-      type: "lost",        
-      title,
-      description,
-      category,
-      location,
-    });
-    navigate("/lost-found");
-  } catch (err) {
-    setError(err.message);
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      await createItem({
+        type: "lost",
+        title: formData.itemName,
+        description: formData.description,
+        category: formData.category,
+        location: formData.location,
+      });
+
+      setSubmitted(true);
+      navigate("/");
+
+    } catch (err) {
+      console.error(err);
+    }
   }
-}
 
   return (
     <section className="report-page">

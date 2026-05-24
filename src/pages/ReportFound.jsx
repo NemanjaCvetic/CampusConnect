@@ -73,20 +73,31 @@ function ReportFound() {
   }
 
   async function handleSubmit(e) {
-  e.preventDefault();
-  try {
-    await createItem({
-      type: "found",        
-      title,
-      description,
-      category,
-      location,
-    });
-    navigate("/lost-found");
-  } catch (err) {
-    setError(err.message);
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      await createItem({
+        type: "found",
+        title: formData.itemName,
+        description: formData.description,
+        category: formData.category,
+        location: formData.location,
+      });
+
+      setSubmitted(true);
+      navigate("/");
+
+    } catch (err) {
+      console.error(err);
+    }
   }
-}
 
   return (
     <section className="report-page">

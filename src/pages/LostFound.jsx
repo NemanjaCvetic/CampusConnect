@@ -6,6 +6,8 @@ import { fetchItems } from "../api/items";
 
 
 function LostFound() {
+
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -112,7 +114,14 @@ function LostFound() {
             <div
               key={item.id}
               className="item-card"
-              onClick={() => navigate(`/request/${item.id}`)}
+              onClick={() => {
+                if (!token) {
+                  navigate("/login");
+                  return;
+                }
+
+                navigate(`/request/${item.id}`);
+              }}
             >
               <div className="item-top">
                 <span className={`status-badge ${item.type}`}>
