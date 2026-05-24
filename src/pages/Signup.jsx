@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../api/auth.js";
+import toast from "react-hot-toast";
 import "./Signup.css"
 
 
@@ -52,7 +53,7 @@ function Signup({ setLogged }) {
       await registerUser(name, studentNumber, email, password);
       navigate("/login");
     } catch (err) {
-      setError(err.message);
+     toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -146,6 +147,8 @@ function Signup({ setLogged }) {
           Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
+
+       
     </div>
   );
 
