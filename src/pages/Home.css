@@ -1,7 +1,7 @@
 .home {
   min-height: 89vh;
   background-color: red;
-  background-image:linear-gradient(rgba(243, 239, 239, 0.4), rgba(234, 234, 234, 0.4)), url("https://siol.net/media/img/f6/2a/347bbe66484e26658cb0-univerza-na-primorskem.jpeg");
+  background-image:linear-gradient(rgba(243, 239, 239, 0.7), rgba(13, 13, 13, 0)), url("https://siol.net/media/img/f6/2a/347bbe66484e26658cb0-univerza-na-primorskem.jpeg");
     background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -30,7 +30,7 @@
 .hero-content h1 {
   font-size: 64px;
   line-height: 1.05;
-  color: black;
+  color: rgb(31, 33, 52);
   margin-bottom: 20px;
 }
 
@@ -44,6 +44,7 @@
 
 .cards-section {
   padding: 20px 80px 80px 80px;
+  margin-left: 10%;
 }
 
 .cards-header {
@@ -123,5 +124,23 @@
   font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 600;
-  color: black;
+  color: rgb(21, 19, 32);
+}
+
+
+
+.action-btn {
+  padding: 14px 24px;
+  background-color: #242938;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.2s;
+  margin-left: 3%;
+}
+
+.action-btn:hover {
+  background-color: #5a6788;
+  transform: translateY(-2px);
 }

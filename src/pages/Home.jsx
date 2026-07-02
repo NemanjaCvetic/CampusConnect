@@ -21,23 +21,23 @@ function Home() {
     ];
 
     const items2 = [
-  {
-    id: 1,
-    title: "Black Wallet",
-    location: "Library",
-    status: "Lost",
-    lat: 45.5481,
-    lng: 13.7300,
-  },
-  {
-    id: 2,
-    title: "White AirPods Case",
-    location: "Cafeteria",
-    status: "Found",
-    lat: 45.5475,
-    lng: 13.7294,
-  },
-];
+        {
+            id: 1,
+            title: "Black Wallet",
+            location: "Library",
+            status: "Lost",
+            lat: 45.5481,
+            lng: 13.7300,
+        },
+        {
+            id: 2,
+            title: "White AirPods Case",
+            location: "Cafeteria",
+            status: "Found",
+            lat: 45.5475,
+            lng: 13.7294,
+        },
+    ];
     const [startIndex, setStartIndex] = useState(0);
 
     const visibleCards = items.slice(startIndex, startIndex + 3);
@@ -66,42 +66,22 @@ function Home() {
                 <div className="hero-content">
                     <p className="hero-label">Campus Lost & Found</p>
                     <h1>Lost or Found an Item on Campus?</h1>
+                    <h2 className="hero-label"><i>Because every lost item deserves to find its way back home.</i></h2>
                 </div>
             </section>
 
             <section className="cards-section">
-                <div className="cards-header">
-                    <h2>Browse by Category</h2>
-
-                    <div className="arrow-buttons">
-                        <button onClick={handlePrev}>
-                            ←
-                        </button>
-                        <button
-                            onClick={handleNext}
-                        >
-                            →
-                        </button>
-                    </div>
-                </div>
-
-                <div className="cards-row">
-                    {visibleCards.map((item) => (
-                        <Link
-                            to={`/lostfound?category=${item.name}`}
-                            className="item-card"
-                            key={item.name}
-                        >
-                            <img src={item.img} alt={item.name} />
-                            <p>{item.name}</p>
-                        </Link>
-                    ))}
-                </div>
+                <Link to="/profile" className="action-btn">
+                   View Items
+                </Link>
+                <Link to="/profile" className="action-btn">
+                   View Map
+                </Link>
             </section>
 
             <div>
-      
-    </div>
+
+            </div>
         </div>
     );
 }
