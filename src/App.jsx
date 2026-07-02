@@ -14,6 +14,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Users from "./pages/Users";
 import Items from "./pages/Items";
 import Claims from "./pages/Claims";
+import Manual from "./pages/Manual";
 import "leaflet/dist/leaflet.css";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
@@ -75,6 +76,7 @@ function App() {
         <Route path="/lostfound" element={<LostFound />} />
         <Route path="/report-lost" element={<ReportLost />} />
         <Route path="/report-found" element={<ReportFound />} />
+        <Route path="/manual" element={<Manual/>}/>
 
         <Route path="/admin" element={user?.role === "admin" ? <AdminDashboard /> : <Navigate to="/"/>}></Route>
         <Route path="/users" element={user?.role ==="admin" ? <Users /> : <Navigate to="/"/>}></Route>

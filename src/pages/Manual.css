@@ -1,0 +1,54 @@
+.manual-page {
+  min-height: 100vh;
+  background: #f4f7fb;
+}
+
+.manual-header {
+  background: #192441;
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.manual-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.manual-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.manual-card h2 {
+  margin-top: 0;
+  color: #1b2a4f;
+}
+
+.manual-card p {
+  line-height: 1.6;
+}
+.manual-card:hover{
+  translate: x;
+}
+
+.download-card {
+  text-align: center;
+}
+
+.pdf-button {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #253355;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.pdf-button:hover {
+  opacity: 0.9;
+}
