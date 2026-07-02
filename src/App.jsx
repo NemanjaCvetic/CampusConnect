@@ -12,6 +12,7 @@ import ReportLost from "./pages/ReportLost";
 import ReportFound from "./pages/ReportFound";
 import AdminDashboard from "./pages/AdminDashboard";
 import Users from "./pages/Users";
+import MapPage from "./pages/Map";
 import Items from "./pages/Items";
 import Claims from "./pages/Claims";
 import Manual from "./pages/Manual";
@@ -77,7 +78,7 @@ function App() {
         <Route path="/report-lost" element={<ReportLost />} />
         <Route path="/report-found" element={<ReportFound />} />
         <Route path="/manual" element={<Manual/>}/>
-
+        <Route path ="/map" element = {<MapPage/>}/>
         <Route path="/admin" element={user?.role === "admin" ? <AdminDashboard /> : <Navigate to="/"/>}></Route>
         <Route path="/users" element={user?.role ==="admin" ? <Users /> : <Navigate to="/"/>}></Route>
         <Route path="/items" element={user?.role === "admin" ? <Items /> : <Navigate to="/"/>}></Route>

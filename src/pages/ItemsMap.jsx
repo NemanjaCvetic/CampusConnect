@@ -17,8 +17,8 @@ function createIcon(color) {
   });
 }
 
-const lostIcon  = createIcon("#e05252");  // red for lost
-const foundIcon = createIcon("#3a9e6e");  // green for found
+const lostIcon  = createIcon("#803131");  
+const foundIcon = createIcon("#3f7058");
 
 function ItemsMap({ items }) {
   return (

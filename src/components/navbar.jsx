@@ -25,6 +25,7 @@ function Navbar({ isLogged, onLogout }) {
         <Link to="/lostfound">Lost & Found</Link>
         <Link to="/about">About</Link>
         <Link to="/manual">Manual</Link>
+        <Link to="/map">Map</Link>
         {user?.role === "student" && (<Link to="/profile">Profile</Link>)}
         {user?.role === "admin" && (
           <Link to="/admin">Admin Dashboard</Link>

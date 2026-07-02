@@ -8,8 +8,6 @@ import bookImg from "../assets/books.png"
 import valuablesImg from "../assets/valuables.png"
 import otherImg from "../assets/other.png"
 import { Link } from "react-router-dom";
-
-import MapView from "./MapView";
 import ItemsMap from "./ItemsMap";
 
 function Home() {
@@ -102,8 +100,7 @@ function Home() {
             </section>
 
             <div>
-      <h1>Lost & Found Map</h1>
-      <ItemsMap items={items2} />
+      
     </div>
         </div>
     );

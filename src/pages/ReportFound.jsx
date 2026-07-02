@@ -6,7 +6,7 @@ import { createItem } from "../api/items";
 
 
 function ReportFound() {
-  
+
   const [formData, setFormData] = useState({
     itemName: "",
     category: "",
@@ -19,7 +19,16 @@ function ReportFound() {
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-   const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const locations = [
+    "FAMNIT",
+    "Brolo",
+    "Trg",
+    "Beach",
+    "Library",
+    "Other",
+  ];
 
   const categories = [
     "Electronics",
@@ -168,13 +177,18 @@ function ReportFound() {
 
             <div className="form-group">
               <label>Location on campus</label>
-              <input
-                type="text"
+              <select
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                placeholder="Example: Library, classroom FAMNIT MP4"
-              />
+              >
+                <option value="">Select location</option>
+                {locations.map((location) => (
+                  <option key={location} value={location}>
+                    {location}
+                  </option>
+                ))}
+              </select>
               {errors.location && <span>{errors.location}</span>}
             </div>
           </div>
